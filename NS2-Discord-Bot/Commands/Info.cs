@@ -10,7 +10,9 @@ namespace NS2_Discord_Bot.Commands
         public async Task Help()
         {
             var embed = new EmbedBuilder()
-                .AddField("Usage", "!ns2 hive <steam ID>", false)
+                .WithTitle("Usage")
+                .AddField("Hive Stats", "!ns2 hive <steam ID>")
+                .AddField("KDR Stats", "!ns2 kdr <steam ID>")
                 .WithColor(Color.Gold)
                 .Build();
 
