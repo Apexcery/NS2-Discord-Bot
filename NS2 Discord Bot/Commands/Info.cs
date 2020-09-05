@@ -10,8 +10,8 @@ namespace NS2_Discord_Bot.Commands
         public async Task Help()
         {
             var embed = new EmbedBuilder()
-                .AddField("Usage", "!ns2 <steam ID>", false)
-                .WithColor(Color.Red)
+                .AddField("Usage", "!ns2 hive <steam ID>", false)
+                .WithColor(Color.Gold)
                 .Build();
 
             await Context.Channel.SendMessageAsync("", false, embed);
