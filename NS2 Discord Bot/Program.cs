@@ -1,17 +1,14 @@
 ﻿using System;
-using System.IO;
 using System.Reflection;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-using NS2_Discord_Bot.Models;
 
 namespace NS2_Discord_Bot
 {
-    class Program
+    internal class Program
     {
         public static void Main(string[] args)
             => new Program().MainAsync().GetAwaiter().GetResult();
@@ -19,8 +16,6 @@ namespace NS2_Discord_Bot
         private DiscordSocketClient _client;
         private CommandService _commands;
         private IServiceProvider _services;
-
-        private Settings _settings;
 
         public async Task MainAsync()
         {
@@ -34,9 +29,7 @@ namespace NS2_Discord_Bot
                 .AddSingleton(_commands)
                 .BuildServiceProvider();
 
-            _settings = JsonConvert.DeserializeObject<Settings>(await File.ReadAllTextAsync("settings.json"));
-
-            var token = _settings.Token;
+            var token = Environment.GetEnvironmentVariable("ns2-discord-token");
 
             await RegisterCommandsAsync();
 
@@ -67,7 +60,9 @@ namespace NS2_Discord_Bot
 
             var argPos = 0;
 
-            if (message.HasStringPrefix(_settings.Prefix, ref argPos))
+            var prefix = Environment.GetEnvironmentVariable("ns2-discord-prefix");
+
+            if (message.HasStringPrefix(prefix, ref argPos))
             {
                 var result = await _commands.ExecuteAsync(context, argPos, _services);
                 if (!result.IsSuccess) Console.WriteLine(result.ErrorReason);

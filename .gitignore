@@ -338,4 +338,4 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-/NS2 Discord Bot/settings.json
+**/launchSettings.json
