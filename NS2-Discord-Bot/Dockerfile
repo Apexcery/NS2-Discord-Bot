@@ -1,15 +1,14 @@
-#See https://aka.ms/containerfastmode to understand how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1-buster-slim AS base
+FROM microsoft/dotnet:2.2-sdk AS build
 WORKDIR /app
 
-COPY *.csproj ./
-RUN dotnet restore
+COPY NS2-Discord-Bot.csproj .
+RUN dotnet restore NS2-Discord-Bot.csproj
 
-COPY . ./
+COPY . .
 RUN dotnet publish -c Release -o out
 
-FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
+FROM microsoft/dotnet:2.2-aspnetcore-runtime AS runtime
 WORKDIR /app
-COPY --from=build-env /app/out .
-ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+COPY --from=build /app/out ./
+
+ENTRYPOINT ["dotnet", "NS2-Discord-Bot.dll"]
