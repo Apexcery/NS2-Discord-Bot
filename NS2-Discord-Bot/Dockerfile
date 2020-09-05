@@ -5,8 +5,8 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["NS2-Discord-Bot/NS2-Discord-Bot.csproj", "NS2-Discord-Bot/"]
-RUN dotnet restore "NS2-Discord-Bot/NS2-Discord-Bot.csproj"
+COPY ["NS2-Discord-Bot.csproj", "NS2-Discord-Bot/"]
+RUN dotnet restore "NS2-Discord-Bot.csproj"
 COPY . .
 WORKDIR "/src/NS2-Discord-Bot"
 RUN dotnet build "NS2-Discord-Bot.csproj" -c Release -o /app/build
