@@ -1,14 +1,14 @@
-FROM microsoft/dotnet:2.2-sdk AS build
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
 WORKDIR /app
 
-COPY NS2-Discord-Bot.csproj .
-RUN dotnet restore NS2-Discord-Bot.csproj
+COPY *.csproj ./
+RUN dotnet restore
 
-COPY . .
+COPY . ./
 RUN dotnet publish -c Release -o out
 
-FROM microsoft/dotnet:2.2-aspnetcore-runtime AS runtime
+FROM mcr.microsoft.com/dotnet/core/aspnet:3.1
 WORKDIR /app
-COPY --from=build /app/out ./
+COPY --from=build /app/out .
 
-ENTRYPOINT ["dotnet", "NS2-Discord-Bot.dll"]
+ENTRYPOINT ["dotnet", "aspnetcoreapp.dll"]
