@@ -3,7 +3,7 @@
 FROM mcr.microsoft.com/dotnet/core/runtime:3.1-buster-slim AS base
 WORKDIR /app
 
-COPY *.cdproj ./
+COPY *.csproj ./
 RUN dotnet restore
 
 COPY . ./
