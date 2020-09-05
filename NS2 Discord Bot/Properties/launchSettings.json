@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "NS2 Discord Bot": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}
