@@ -17,27 +17,25 @@ namespace NS2_Discord_Bot.Commands
         public async Task LinkProfile(string steamId = null)
         {
             var allLinks = JsonConvert.DeserializeObject<List<ProfileLink>>(await File.ReadAllTextAsync("profileLinks.json"));
+            var currentLink = allLinks.FirstOrDefault(x => x.DiscordID == Context.User.Id);
 
             if (string.IsNullOrEmpty(steamId))
             {
-                var currentProfileLink = allLinks.FirstOrDefault(x => x.DiscordID == Context.User.Id);
-
-                if (currentProfileLink == null)
+                if (currentLink == null)
                 {
                     await ReplyAsync("You have not yet linked your profile");
                     return;
                 }
 
                 var currentLinkEmbed = new EmbedBuilder()
-                    .WithTitle($"Linked To: {currentProfileLink.ObservatoryProfileName}")
-                    .WithUrl(currentProfileLink.ObservatoryProfileUrl)
+                    .WithTitle($"Linked To: {currentLink.ObservatoryProfileName}")
+                    .WithUrl(currentLink.ObservatoryProfileUrl)
                     .Build();
 
                 await Context.Channel.SendMessageAsync("", false, currentLinkEmbed);
 
                 return;
             }
-            var currentLink = allLinks.FirstOrDefault(x => x.SteamID.Equals(steamId, StringComparison.OrdinalIgnoreCase));
 
             if (currentLink != null)
                 allLinks.Remove(currentLink);
