@@ -8,6 +8,7 @@ using HtmlAgilityPack;
 using Newtonsoft.Json;
 using NS2_Discord_Bot.Models;
 using NS2_Discord_Bot.Services;
+using Color = Discord.Color;
 
 namespace NS2_Discord_Bot.Commands
 {
