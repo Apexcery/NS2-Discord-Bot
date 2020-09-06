@@ -8,7 +8,7 @@ using HtmlAgilityPack;
 using Newtonsoft.Json;
 using NS2_Discord_Bot.Models;
 using NS2_Discord_Bot.Services;
-using Color = Discord.Color;
+using Color = NS2_Discord_Bot.Services.Color;
 
 namespace NS2_Discord_Bot.Commands
 {
@@ -57,7 +57,7 @@ namespace NS2_Discord_Bot.Commands
                 .AddField("Level / Exp:", hiveLevelExp)
                 .AddField("Score:", hiveScore)
                 .AddField("Score / Min:", hiveScoreMin)
-                .WithColor(Color.Orange)
+                .WithColor(Color.GetRandomColor())
                 .Build();
 
             await Context.Channel.SendMessageAsync("", false, embed);

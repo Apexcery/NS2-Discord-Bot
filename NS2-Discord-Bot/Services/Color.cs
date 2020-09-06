@@ -5,7 +5,7 @@ namespace NS2_Discord_Bot.Services
 {
     public class Color
     {
-        public Discord.Color GetRandomColor()
+        public static Discord.Color GetRandomColor()
         {
             var allColors = new List<Discord.Color>
             {
