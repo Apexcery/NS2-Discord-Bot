@@ -1,11 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 using HtmlAgilityPack;
+using Newtonsoft.Json;
+using NS2_Discord_Bot.Models;
 using NS2_Discord_Bot.Services;
 
 namespace NS2_Discord_Bot.Commands
@@ -13,13 +14,28 @@ namespace NS2_Discord_Bot.Commands
     public class Hive : ModuleBase<SocketCommandContext>
     {
         [Command("hive")]
-        public async Task HiveLookup(string steamId)
+        public async Task HiveLookup(string steamId = null)
         {
+            var linkedProfile = string.IsNullOrEmpty(steamId);
+
+            if (string.IsNullOrEmpty(steamId))
+            {
+                var allProfileLinks = JsonConvert.DeserializeObject<List<ProfileLink>>(await File.ReadAllTextAsync("profileLinks.json"));
+                var profileLink = allProfileLinks.FirstOrDefault(x => x.DiscordID == Context.User.Id);
+                if (profileLink == null)
+                {
+                    await ReplyAsync("You need to specify a Steam ID or link your profile");
+                    return;
+                }
+
+                steamId = profileLink.SteamID;
+            }
+
             var (profileUrl, profilePage) = await Profile.GetProfilePage(steamId);
 
             if (profilePage == null || string.IsNullOrEmpty(profileUrl))
             {
-                await ReplyAsync("Could not find a profile with that Steam ID");
+                await ReplyAsync($"Could not find a profile with {(linkedProfile ? "the Steam ID you have linked" : "that Steam ID")}");
                 return;
             }
 
@@ -29,7 +45,7 @@ namespace NS2_Discord_Bot.Commands
 
             if (hiveSkill == null || hiveLevelExp == null || hiveScore == null || hiveScoreMin == null)
             {
-                await ReplyAsync("Could not find the Hive details for that profile");
+                await ReplyAsync($"Could not find the Hive details for {(linkedProfile ? "the Steam ID you have linked" : "that Steam ID")}");
                 return;
             }
 
