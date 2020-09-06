@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
 
@@ -9,10 +10,13 @@ namespace NS2_Discord_Bot.Commands
         [Command("help")]
         public async Task Help()
         {
+            var prefix = Environment.GetEnvironmentVariable("ns2-discord-prefix");
+
             var embed = new EmbedBuilder()
                 .WithTitle("Usage")
-                .AddField("Hive Stats", "!ns2 hive <steam ID>")
-                .AddField("KDR Stats", "!ns2 kdr <steam ID>")
+                .AddField("Link Profile", $"{prefix}link <steam ID> (leave blank to view linked profile)")
+                .AddField("Hive Stats", $"{prefix}hive <steam ID> (leave blank to use linked profile)")
+                .AddField("KDR Stats", $"{prefix}kdr <steam ID> (leave blank to use linked profile)")
                 .WithColor(Color.Gold)
                 .Build();
 
