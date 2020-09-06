@@ -8,6 +8,7 @@ using Discord.Commands;
 using Newtonsoft.Json;
 using NS2_Discord_Bot.Models;
 using NS2_Discord_Bot.Services;
+using Color = NS2_Discord_Bot.Services.Color;
 
 namespace NS2_Discord_Bot.Commands
 {
@@ -30,6 +31,7 @@ namespace NS2_Discord_Bot.Commands
                 var currentLinkEmbed = new EmbedBuilder()
                     .WithTitle($"Linked To: {currentLink.ObservatoryProfileName}")
                     .WithUrl(currentLink.ObservatoryProfileUrl)
+                    .WithColor(Color.GetRandomColor())
                     .Build();
 
                 await Context.Channel.SendMessageAsync("", false, currentLinkEmbed);
@@ -65,6 +67,7 @@ namespace NS2_Discord_Bot.Commands
                 .WithTitle("Successfully Linked")
                 .WithUrl(profileUrl)
                 .WithDescription($"You have successfully linked your profile to '{profileName}'")
+                .WithColor(Color.GetRandomColor())
                 .Build();
 
             await Context.Channel.SendMessageAsync("", false, embed);

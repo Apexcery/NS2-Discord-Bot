@@ -8,6 +8,7 @@ using HtmlAgilityPack;
 using Newtonsoft.Json;
 using NS2_Discord_Bot.Models;
 using NS2_Discord_Bot.Services;
+using Color = NS2_Discord_Bot.Services.Color;
 
 namespace NS2_Discord_Bot.Commands
 {
@@ -57,7 +58,7 @@ namespace NS2_Discord_Bot.Commands
                 .AddField("Alien KDR | 100:", alien100)
                 .AddField("Marine KDR | 30", marine30)
                 .AddField("Marine KDR | 100", marine100)
-                .WithColor(Color.Orange)
+                .WithColor(Color.GetRandomColor())
                 .Build();
 
             await Context.Channel.SendMessageAsync("", false, embed);
