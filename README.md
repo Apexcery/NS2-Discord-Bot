@@ -1,5 +1,5 @@
 # NS2 Discord Bot
-A docker discord bot that allows you to pull your player stats from Observatory.
+A docker discord bot that allows you to scrape your player stats from [Observatory](https://observatory.morrolan.ch/).
 
 ### Variables
 | Key                  | Value                                                                                                                        |
