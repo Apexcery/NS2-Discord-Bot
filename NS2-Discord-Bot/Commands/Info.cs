@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Discord;
 using Discord.Commands;
@@ -22,6 +24,28 @@ namespace NS2_Discord_Bot.Commands
                 .Build();
 
             await Context.Channel.SendMessageAsync("", false, embed);
+        }
+
+        [Command("changelog")]
+        public async Task Changelog()
+        {
+            var allChanges = await File.ReadAllLinesAsync("recentChanges.txt");
+            var recentChanges = allChanges.Select(x =>
+            {
+                var temp = x.Split(':');
+                return (temp[0].Trim(), temp[1].Trim());
+            }).ToList();
+
+            var embed = new EmbedBuilder()
+                .WithTitle("Changelog")
+                .WithColor(Color.GetRandomColor());
+
+            foreach (var (name, change) in recentChanges)
+            {
+                embed = embed.AddField(name, change);
+            }
+
+            await Context.Channel.SendMessageAsync("", false, embed.Build());
         }
     }
 }
