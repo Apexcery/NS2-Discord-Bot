@@ -17,9 +17,10 @@ namespace NS2_Discord_Bot.Commands
 
             var embed = new EmbedBuilder()
                 .WithTitle("Usage")
-                .AddField("Link Profile", $"{prefix}link <steam ID> (leave blank to view linked profile)")
-                .AddField("Hive Stats", $"{prefix}hive <steam ID> (leave blank to use linked profile)")
-                .AddField("KDR Stats", $"{prefix}kdr <steam ID> (leave blank to use linked profile)")
+                .AddField("Changelog", $"{prefix}changelog | View the most recent changes to this bot.")
+                .AddField("Link Profile", $"{prefix}link <steam ID> (leave blank to view linked profile) | Link your profile to save typing it for every command.")
+                .AddField("Hive Stats", $"{prefix}hive <steam ID> (leave blank to use linked profile) | View the hive stats for the specified user.")
+                .AddField("KDR Stats", $"{prefix}kdr <steam ID> (leave blank to use linked profile) | View the kdr stats for the specified user.")
                 .WithColor(Color.GetRandomColor())
                 .Build();
 
