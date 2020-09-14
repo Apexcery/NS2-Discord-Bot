@@ -21,6 +21,8 @@ namespace NS2_Discord_Bot.Services
             var url = "https://observatory.morrolan.ch" + profileUrl;
             doc = await web.LoadFromWebAsync(url);
 
+            await UpdateProfile(doc);
+
             return (url, doc);
         }
 
@@ -34,6 +36,25 @@ namespace NS2_Discord_Bot.Services
                 .Replace("\n", string.Empty);
 
             return headerText;
+        }
+
+        public static async Task UpdateProfile(HtmlDocument doc)
+        {
+            var header = doc.DocumentNode.SelectSingleNode("//div[contains(@class, 'page-header')]")?.InnerText;
+            
+            if (string.IsNullOrEmpty(header)) return;
+
+            var lastUpdatedText = header
+                .Substring(header.IndexOf("Updated:", StringComparison.Ordinal))
+                .Replace("\n", string.Empty);
+
+            if (lastUpdatedText.Contains("minute")) return;
+
+            var updateButton = doc.DocumentNode.SelectSingleNode("//input[contains(@value, 'Update')]");
+
+            
+
+            return;
         }
     }
 }
