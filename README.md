@@ -10,4 +10,4 @@ A docker discord bot that allows you to scrape your player stats from [Observato
 ### Paths
 | Path                 | Description                                                                                                                       |
 | -------------------: | :-------------------------------------------------------------------------------------------------------------------------------: |
-|              `/data` | The folder to store the various data files used by this bot.<br /> e.g. `profileLinks.json` which keeps track of linked profiles. |
+|              `/data` | The folder to store the various data files used by this bot.<br />e.g. `profileLinks.json` which keeps track of linked profiles. |
