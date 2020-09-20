@@ -21,7 +21,7 @@ namespace NS2_Discord_Bot.Commands
 
             if (string.IsNullOrEmpty(steamId))
             {
-                steamId = await Profile.GetProfileLinkFromDiscordId(Context.User.Id);
+                steamId = await Profile.GetSteamIdFromDiscordId(Context.User.Id);
 
                 if (steamId == null)
                 {

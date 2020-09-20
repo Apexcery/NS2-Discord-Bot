@@ -41,7 +41,7 @@ namespace NS2_Discord_Bot.Services
             return headerText;
         }
 
-        public static async Task<string> GetProfileLinkFromDiscordId(ulong discordId)
+        public static async Task<string> GetSteamIdFromDiscordId(ulong discordId)
         {
             var allProfileLinks = JsonConvert.DeserializeObject<List<ProfileLink>>(await File.ReadAllTextAsync("profileLinks.json"));
             var profileLink = allProfileLinks.FirstOrDefault(x => x.DiscordID == discordId);
@@ -49,6 +49,16 @@ namespace NS2_Discord_Bot.Services
             var steamId = profileLink?.SteamID;
 
             return steamId;
+        }
+
+        public static async Task<ulong?> GetDiscordIdFromSteamId(string steamId)
+        {
+            var allProfileLinks = JsonConvert.DeserializeObject<List<ProfileLink>>(await File.ReadAllTextAsync("profileLinks.json"));
+            var profileLink = allProfileLinks.FirstOrDefault(x => x.SteamID == steamId);
+
+            var discordId = profileLink?.DiscordID;
+
+            return discordId;
         }
     }
 }
