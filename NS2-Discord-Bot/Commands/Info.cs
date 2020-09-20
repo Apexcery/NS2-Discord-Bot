@@ -13,7 +13,7 @@ namespace NS2_Discord_Bot.Commands
         [Command("help")]
         public async Task Help()
         {
-            var prefix = Environment.GetEnvironmentVariable("ns2-discord-prefix");
+            var prefix = Environment.GetEnvironmentVariable("prefix");
 
             var embed = new EmbedBuilder()
                 .WithTitle("Usage")

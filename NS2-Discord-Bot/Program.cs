@@ -29,7 +29,7 @@ namespace NS2_Discord_Bot
                 .AddSingleton(_commands)
                 .BuildServiceProvider();
 
-            var token = Environment.GetEnvironmentVariable("ns2-discord-token");
+            var token = Environment.GetEnvironmentVariable("token");
 
             await RegisterCommandsAsync();
 
@@ -60,7 +60,7 @@ namespace NS2_Discord_Bot
 
             var argPos = 0;
 
-            var prefix = Environment.GetEnvironmentVariable("ns2-discord-prefix");
+            var prefix = Environment.GetEnvironmentVariable("prefix");
 
             if (message.HasStringPrefix(prefix, ref argPos))
             {
