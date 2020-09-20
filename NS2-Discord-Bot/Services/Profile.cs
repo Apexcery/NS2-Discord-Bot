@@ -43,6 +43,16 @@ namespace NS2_Discord_Bot.Services
 
         public static async Task<string> GetSteamIdFromDiscordId(ulong discordId)
         {
+#if DEBUG
+            if (!Directory.Exists("./appdata"))
+                return null;
+            if (!File.Exists("./appdata/profileLinks.json"))
+            {
+                await File.WriteAllTextAsync("./appdata/profileLinks.json", "[]");
+                return null;
+            }
+            var allProfileLinks = JsonConvert.DeserializeObject<List<ProfileLink>>(await File.ReadAllTextAsync("./appdata/profileLinks.json"));
+#else
             if (!Directory.Exists("../appdata"))
             {
                 return null;
@@ -52,8 +62,9 @@ namespace NS2_Discord_Bot.Services
                 await File.WriteAllTextAsync("../appdata/profileLinks.json", "[]");
                 return null;
             }
-
             var allProfileLinks = JsonConvert.DeserializeObject<List<ProfileLink>>(await File.ReadAllTextAsync("../appdata/profileLinks.json"));
+#endif
+
             var profileLink = allProfileLinks.FirstOrDefault(x => x.DiscordID == discordId);
 
             var steamId = profileLink?.SteamID;
@@ -63,6 +74,16 @@ namespace NS2_Discord_Bot.Services
 
         public static async Task<ulong?> GetDiscordIdFromSteamId(string steamId)
         {
+#if DEBUG
+            if (!Directory.Exists("./appdata"))
+                return null;
+            if (!File.Exists("./appdata/profileLinks.json"))
+            {
+                await File.WriteAllTextAsync("./appdata/profileLinks.json", "[]");
+                return null;
+            }
+            var allProfileLinks = JsonConvert.DeserializeObject<List<ProfileLink>>(await File.ReadAllTextAsync("./appdata/profileLinks.json"));
+#else
             if (!Directory.Exists("../appdata"))
             {
                 return null;
@@ -72,8 +93,8 @@ namespace NS2_Discord_Bot.Services
                 await File.WriteAllTextAsync("../appdata/profileLinks.json", "[]");
                 return null;
             }
-
             var allProfileLinks = JsonConvert.DeserializeObject<List<ProfileLink>>(await File.ReadAllTextAsync("../appdata/profileLinks.json"));
+#endif
             var profileLink = allProfileLinks.FirstOrDefault(x => x.SteamID == steamId);
 
             var discordId = profileLink?.DiscordID;

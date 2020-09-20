@@ -17,6 +17,17 @@ namespace NS2_Discord_Bot.Commands
         [Command("link")]
         public async Task LinkProfile(string steamId = null)
         {
+#if DEBUG
+            if (!Directory.Exists("./appdata"))
+            {
+                await ReplyAsync("'appdata' directory does not exist.");
+                return;
+            }
+            if (!File.Exists("./appdata/profileLinks.json"))
+            {
+                await File.WriteAllTextAsync("./appdata/profileLinks.json", "[]");
+            }
+#else
             if (!Directory.Exists("../appdata"))
             {
                 await ReplyAsync("'appdata' directory does not exist.");
@@ -26,8 +37,13 @@ namespace NS2_Discord_Bot.Commands
             {
                 await File.WriteAllTextAsync("../appdata/profileLinks.json", "[]");
             }
+#endif
 
+#if DEBUG
+            var allLinks = JsonConvert.DeserializeObject<List<ProfileLink>>(await File.ReadAllTextAsync("./appdata/profileLinks.json"));
+#else
             var allLinks = JsonConvert.DeserializeObject<List<ProfileLink>>(await File.ReadAllTextAsync("../appdata/profileLinks.json"));
+#endif
             var currentLink = allLinks.FirstOrDefault(x => x.DiscordID == Context.User.Id);
 
             if (string.IsNullOrEmpty(steamId))
@@ -71,7 +87,11 @@ namespace NS2_Discord_Bot.Commands
             };
 
             allLinks.Add(newProfileLink);
+#if DEBUG
+            await File.WriteAllTextAsync("./appdata/profileLinks.json" ,JsonConvert.SerializeObject(allLinks, Formatting.Indented));
+#else
             await File.WriteAllTextAsync("../appdata/profileLinks.json" ,JsonConvert.SerializeObject(allLinks, Formatting.Indented));
+#endif
 
             var embed = new EmbedBuilder()
                 .WithTitle("Successfully Linked")
