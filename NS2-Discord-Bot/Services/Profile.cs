@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using Newtonsoft.Json;
+using NS2_Discord_Bot.Models;
 
 namespace NS2_Discord_Bot.Services
 {
@@ -34,6 +39,16 @@ namespace NS2_Discord_Bot.Services
                 .Replace("\n", string.Empty);
 
             return headerText;
+        }
+
+        public static async Task<string> GetProfileLinkFromDiscordId(ulong discordId)
+        {
+            var allProfileLinks = JsonConvert.DeserializeObject<List<ProfileLink>>(await File.ReadAllTextAsync("profileLinks.json"));
+            var profileLink = allProfileLinks.FirstOrDefault(x => x.DiscordID == discordId);
+
+            var steamId = profileLink?.SteamID;
+
+            return steamId;
         }
     }
 }
