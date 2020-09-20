@@ -19,6 +19,7 @@ namespace NS2_Discord_Bot.Commands
                 .WithTitle("Usage")
                 .AddField("Changelog", $"{prefix}changelog\nView the most recent changes to this bot.")
                 .AddField("Link Profile", $"{prefix}link <steam ID> (leave blank to view linked profile)\nLink your profile to save typing it for every command.")
+                .AddField("Unlink Profile", $"{prefix}unlink\nRemoves your current link.")
                 .AddField("Hive Stats", $"{prefix}hive <steam ID> (leave blank to use linked profile)\nView the hive stats for the specified user.")
                 .AddField("KDR Stats", $"{prefix}kdr <steam ID> (leave blank to use linked profile)\nView the kdr stats for the specified user.")
                 .AddField("Accuracy Stats", $"{prefix}accuracy <steam ID> (leave blank to use linked profile)\nView the accuracy stats for the specified user.")
