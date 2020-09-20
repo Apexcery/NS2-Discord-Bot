@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using HtmlAgilityPack;
+using Newtonsoft.Json;
+using NS2_Discord_Bot.Models;
 
 namespace NS2_Discord_Bot.Services
 {
@@ -34,6 +39,46 @@ namespace NS2_Discord_Bot.Services
                 .Replace("\n", string.Empty);
 
             return headerText;
+        }
+
+        public static async Task<string> GetSteamIdFromDiscordId(ulong discordId)
+        {
+            if (!Directory.Exists("./appdata"))
+            {
+                return null;
+            }
+            if (!File.Exists("./appdata/profileLinks.json"))
+            {
+                await File.WriteAllTextAsync("./appdata/profileLinks.json", "[]");
+                return null;
+            }
+
+            var allProfileLinks = JsonConvert.DeserializeObject<List<ProfileLink>>(await File.ReadAllTextAsync("./appdata/profileLinks.json"));
+            var profileLink = allProfileLinks.FirstOrDefault(x => x.DiscordID == discordId);
+
+            var steamId = profileLink?.SteamID;
+
+            return steamId;
+        }
+
+        public static async Task<ulong?> GetDiscordIdFromSteamId(string steamId)
+        {
+            if (!Directory.Exists("./appdata"))
+            {
+                return null;
+            }
+            if (!File.Exists("./appdata/profileLinks.json"))
+            {
+                await File.WriteAllTextAsync("./appdata/profileLinks.json", "[]");
+                return null;
+            }
+
+            var allProfileLinks = JsonConvert.DeserializeObject<List<ProfileLink>>(await File.ReadAllTextAsync("./appdata/profileLinks.json"));
+            var profileLink = allProfileLinks.FirstOrDefault(x => x.SteamID == steamId);
+
+            var discordId = profileLink?.DiscordID;
+
+            return discordId;
         }
     }
 }

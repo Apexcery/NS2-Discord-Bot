@@ -21,15 +21,13 @@ namespace NS2_Discord_Bot.Commands
 
             if (string.IsNullOrEmpty(steamId))
             {
-                var allProfileLinks = JsonConvert.DeserializeObject<List<ProfileLink>>(await File.ReadAllTextAsync("profileLinks.json"));
-                var profileLink = allProfileLinks.FirstOrDefault(x => x.DiscordID == Context.User.Id);
-                if (profileLink == null)
+                steamId = await Profile.GetSteamIdFromDiscordId(Context.User.Id);
+
+                if (steamId == null)
                 {
                     await ReplyAsync("You need to specify a Steam ID or link your profile");
                     return;
                 }
-
-                steamId = profileLink.SteamID;
             }
 
             var (profileUrl, profilePage) = await Profile.GetProfilePage(steamId);
