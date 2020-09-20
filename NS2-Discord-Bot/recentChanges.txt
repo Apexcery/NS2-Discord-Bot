@@ -1,2 +1,1 @@
-﻿Changelog : Added the command 'changelog' to view the most recent change(s) to this bot.
-Accuracy : Added the command 'accuracy' to view the accuracy stats for the specified user.
+﻿Saving : Profile links should now persist through bot updates.
