@@ -23,7 +23,7 @@ namespace NS2_Discord_Bot.Commands
                 .AddField("Hive Stats", $"{prefix}hive <steam ID> (leave blank to use linked profile)\nView the hive stats for the specified user.")
                 .AddField("KDR Stats", $"{prefix}kdr <steam ID> (leave blank to use linked profile)\nView the kdr stats for the specified user.")
                 .AddField("Accuracy Stats", $"{prefix}accuracy <steam ID> (leave blank to use linked profile)\nView the accuracy stats for the specified user.")
-                .WithColor(Color.GetRandomColor())
+                .WithColor(Color.GetRandomDiscordColor())
                 .Build();
 
             await Context.Channel.SendMessageAsync("", false, embed);
@@ -41,7 +41,7 @@ namespace NS2_Discord_Bot.Commands
 
             var embed = new EmbedBuilder()
                 .WithTitle("Changelog")
-                .WithColor(Color.GetRandomColor());
+                .WithColor(Color.GetRandomDiscordColor());
 
             foreach (var (name, change) in recentChanges)
             {

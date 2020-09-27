@@ -55,7 +55,7 @@ namespace NS2_Discord_Bot.Commands
                 .AddField("Level / Exp:", hiveLevelExp)
                 .AddField("Score:", hiveScore)
                 .AddField("Score / Min:", hiveScoreMin)
-                .WithColor(Color.GetRandomColor())
+                .WithColor(Color.GetRandomDiscordColor())
                 .Build();
 
             await Context.Channel.SendMessageAsync("", false, embed);

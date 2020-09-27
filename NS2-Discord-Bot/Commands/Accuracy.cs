@@ -58,7 +58,7 @@ namespace NS2_Discord_Bot.Commands
                 .AddField("Marine (excl. Onos) Accuracy | 100", marineExclOnos100)
                 .AddField("Marine (incl. Onos) Accuracy | 30", marineInclOnos30)
                 .AddField("Marine (incl. Onos) Accuracy | 100", marineInclOnos100)
-                .WithColor(Color.GetRandomColor())
+                .WithColor(Color.GetRandomDiscordColor())
                 .Build();
 
             await Context.Channel.SendMessageAsync("", false, embed);

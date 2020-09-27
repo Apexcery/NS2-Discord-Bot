@@ -56,7 +56,7 @@ namespace NS2_Discord_Bot.Commands
                 .AddField("Alien KDR | 100:", alien100)
                 .AddField("Marine KDR | 30", marine30)
                 .AddField("Marine KDR | 100", marine100)
-                .WithColor(Color.GetRandomColor())
+                .WithColor(Color.GetRandomDiscordColor())
                 .Build();
 
             await Context.Channel.SendMessageAsync("", false, embed);
