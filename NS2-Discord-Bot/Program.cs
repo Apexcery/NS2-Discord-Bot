@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Discord;
@@ -57,6 +58,22 @@ namespace NS2_Discord_Bot
             var context = new SocketCommandContext(_client, message);
 
             if (message?.Author == null || message.Author.IsBot) return;
+
+            if (context.IsPrivate && message.Channel is SocketDMChannel)
+            {
+                var idiots = new[]
+                {
+                    (ulong) 97513010746097664, //izaac
+                    (ulong) 127855504440557568, //wiggy
+                    (ulong) 131529962908942336 //stuart
+                };
+
+                if (idiots.Contains(message.Author.Id))
+                {
+                    await context.Channel.SendMessageAsync("ur an idiot lol");
+                    return;
+                }
+            }
 
             var argPos = 0;
 
