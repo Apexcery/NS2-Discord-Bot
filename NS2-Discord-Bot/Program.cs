@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
@@ -6,6 +8,8 @@ using Discord;
 using Discord.Commands;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json;
+using NS2_Discord_Bot.Models;
 
 namespace NS2_Discord_Bot
 {
@@ -61,12 +65,29 @@ namespace NS2_Discord_Bot
 
             if (context.IsPrivate && message.Channel is SocketDMChannel)
             {
-                var idiots = new[]
+#if DEBUG
+                if (!Directory.Exists("./appdata"))
                 {
-                    (ulong) 97513010746097664, //izaac
-                    (ulong) 127855504440557568, //wiggy
-                    (ulong) 131529962908942336 //stuart
-                };
+                    await context.Channel.SendMessageAsync("'appdata' directory does not exist.");
+                    return;
+                }
+                if (!File.Exists("./appdata/idiots.txt"))
+                {
+                    await File.WriteAllTextAsync("./appdata/idiots.txt", "");
+                }
+                var idiots = (await File.ReadAllLinesAsync("./appdata/idiots.txt")).Select(x => ulong.Parse(x.Split(',')[0])).ToList();
+#else
+                if (!Directory.Exists("../appdata"))
+                {
+                    await context.Channel.SendMessageAsync("'appdata' directory does not exist.");
+                    return;
+                }
+                if (!File.Exists("../appdata/idiots.txt"))
+                {
+                    await File.WriteAllTextAsync("../appdata/idiots.txt", "");
+                }
+                var idiots = (await File.ReadAllLinesAsync("../appdata/idiots.txt")).Select(x => ulong.Parse(x.Split(',')[0])).ToList();
+#endif
 
                 if (idiots.Contains(message.Author.Id))
                 {
